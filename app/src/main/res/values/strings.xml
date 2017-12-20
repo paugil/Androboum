@@ -9,5 +9,6 @@
     <string name="imageUploaded">Image chargée</string>
     <string name="butonList">Liste des utilisateurs</string>
     <string name="filter_dialog_title">Filtrer</string>
+    <string name="buttonBomb">BOMB IT !</string>
 
 </resources>

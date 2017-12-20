@@ -5,6 +5,7 @@
     <item
         android:id="@+id/filterConnected"
         android:title="@string/filter_dialog_title"
+        android:icon="@drawable/ic_settings_black_24dp"
         app:showAsAction="ifRoom"/>
 
 </menu>
