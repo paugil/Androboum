@@ -168,6 +168,7 @@ public class UserListActivity extends AppCompatActivity {
             ImageView imageProfilView = (ImageView) layout.findViewById(R.id.imageView);
             TextView textView = (TextView) layout.findViewById(R.id.textView);
             ImageView imageConnectedView = (ImageView) layout.findViewById(R.id.imageView2);
+            TextView score = (TextView) layout.findViewById(R.id.score);
 
             // on télécharge dans le premier composant l'image du profil
             FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -182,6 +183,7 @@ public class UserListActivity extends AppCompatActivity {
 
             // on positionne le email dans le TextView
             textView.setText(p.getEmail());
+            score.setText(String.valueOf(p.getScore()));
 
             // si l'utilisateur n'est pas connecté, on rend invisible le troisième composant
             if (!p.isConnected) {

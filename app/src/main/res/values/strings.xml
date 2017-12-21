@@ -10,5 +10,16 @@
     <string name="butonList">Liste des utilisateurs</string>
     <string name="filter_dialog_title">Filtrer</string>
     <string name="buttonBomb">BOMB IT !</string>
-
+    <string name="buttonRetry">RENVOYER LA BOMBE</string>
+    <string name="cible">Cible</string>
+    <string name="bombedText">Vous avez été bombé par </string>
+    <string name="target">cible</string>
+    <string name="source">attaquant</string>
+    <string name="resendBomb">Renvoyer la bombe</string>
+    <string name="nouserresponse">Pas de réponse de l\'utilisateur</string>
+    <string name="userbusy">L\'utilisateur est occupé</string>
+    <string name="cantbombme">Vous ne pouvez pas vous bomber vous même !</string>
+    <string name="bombexplosed">La bombe a explosé !</string>
+    <string name="win">Gagné !</string>
+    <string name="lost">Perdu !</string>
 </resources>

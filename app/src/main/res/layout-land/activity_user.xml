@@ -8,10 +8,10 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="548dp"
-        android:layout_height="wrap_content"
+        android:layout_width="599dp"
+        android:layout_height="42dp"
         android:layout_marginStart="8dp"
-        android:background="?attr/colorPrimary"
+        android:background="@color/cardview_dark_background"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toTopOf="@+id/imageProfil"

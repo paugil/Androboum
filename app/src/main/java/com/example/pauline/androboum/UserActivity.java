@@ -251,7 +251,8 @@ public class UserActivity extends AppCompatActivity {
         if (fuser != null) {      
             user.setUid(fuser.getUid());     
             user.setEmail(fuser.getEmail());     
-            user.setConnected(true);    
+            user.setConnected(true);
+            AndroBoumApp.buildBomber(this);
         }
         updateProfil(user);
     }

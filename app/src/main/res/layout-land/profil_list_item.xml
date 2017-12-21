@@ -18,8 +18,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="152dp"
-        android:layout_height="51dp"
+        android:layout_width="280dp"
+        android:layout_height="31dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/score"
@@ -29,8 +29,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
