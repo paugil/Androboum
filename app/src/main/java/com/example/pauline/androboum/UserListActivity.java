@@ -125,6 +125,10 @@ public class UserListActivity extends AppCompatActivity {
                 Log.v("Androboum", "ocucofedjksl");
                 showFilterDialog();
 
+            case R.id.action_map:
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
+
             default:
                 // aucune action reconnue
                 return super.onOptionsItemSelected(item);

@@ -1,11 +1,14 @@
 package com.example.pauline.androboum;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -24,6 +28,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,12 +49,15 @@ public class UserActivity extends AppCompatActivity {
     //  on choisit une valeur arbitraire pour représenter la connexion
     private static final int RC_SIGN_IN = 123;
     private static final int SELECT_PICTURE = 124;
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 125;
     private java.lang.Object connectStatus;
     private Profil user = new Profil();
+    private FusedLocationProviderClient mFusedLocationClient;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         setContentView(R.layout.activity_user);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
@@ -96,6 +105,7 @@ public class UserActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     // cette méthode est appelée quand l'appel StartActivityForResult est terminé
@@ -255,6 +265,7 @@ public class UserActivity extends AppCompatActivity {
             AndroBoumApp.buildBomber(this);
         }
         updateProfil(user);
+        getLocation();
     }
 
     private void updateProfil(Profil user) {
@@ -263,6 +274,8 @@ public class UserActivity extends AppCompatActivity {
         ref.child("connected").setValue(true);
         ref.child("email").setValue(user.getEmail());
         ref.child("uid").setValue(user.getUid());
+        ref.child("latitude").setValue(37.422);
+        ref.child("longitude").setValue(-122.084);
     }
 
     @Override protected void onDestroy() {
@@ -286,6 +299,46 @@ public class UserActivity extends AppCompatActivity {
     public void lancerList() {
         Intent intent = new Intent(this, UserListActivity.class);
         startActivity(intent);
+    }
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // on demande les permissions
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            return;
+            }
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // location contient la position, sauf si il est null.
+                            if (location != null) {
+                                Log.v("Androboum","Coordonnées GPS: Latitude="+ location.getLatitude()+" Longitude="+location.getLongitude());
+                                user.setLatitude(location.getLatitude());
+                                user.setLongitude(location.getLongitude());
+                                updateProfil(user);
+                            }
+                        }
+                    });
+
+    }
+    @Override public void onRequestPermissionsResult(int requestCode, String permissions[],
+                                                     int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // on est autorisé, donc on rappelle getLocation()
+                    getLocation();
+                } else {
+
+                }// on n'a pas l'autorisation donc on ne fait rien
+            }
+            return;
+        }
     }
 
 }
